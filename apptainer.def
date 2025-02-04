@@ -1,0 +1,28 @@
+Bootstrap: docker
+From: nvidia/cuda:12.4.1-cudnn-devel-ubuntu22.04
+
+%files
+    ./ /opt/src/
+
+%post
+    apt-get update && apt-get install -y --no-install-recommends wget git
+
+    wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+    bash ./Miniconda3-latest-Linux-x86_64.sh -b -p /opt/miniconda
+    rm Miniconda3-latest-Linux-x86_64.sh
+    echo ". /opt/miniconda/etc/profile.d/conda.sh" >> $APPTAINER_ENVIRONMENT
+    . /opt/miniconda/etc/profile.d/conda.sh
+
+    conda env create -f /opt/src/env_base.yml
+    echo "conda activate koafusion" >> $APPTAINER_ENVIRONMENT
+    conda activate koafusion
+
+    pip install -e /opt/src/
+
+    mkdir /opt/results/
+    mkdir /opt/data/
+
+%environment
+    # See https://github.com/apptainer/singularity/issues/5075#issuecomment-972934341
+    export APPTAINER_SHELL=/bin/bash
+    export PATH=/opt/miniconda/bin:${PATH}

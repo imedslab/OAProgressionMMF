@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "koafusion"
+version = "0.1.0"
+authors = [
+  { name="Egor Panfilov", email="egor.v.panfilov@gmail.com" },
+]
+description = "Framework for KOA progression prediction from multimodal data"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/imedslab/OAProgressionMMF"
+"Bug Tracker" = "https://github.com/imedslab/OAProgressionMMF/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["koafusion*"]
+exclude = ["entry*"]
+namespaces = false

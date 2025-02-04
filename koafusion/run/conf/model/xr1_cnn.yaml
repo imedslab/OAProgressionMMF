@@ -1,0 +1,23 @@
+# @package model
+
+name: XR1Cnn
+input_size: None
+#input_size: [ 999, 999 ]
+downscale: false
+#downscale: [ 1.0, 1.0 ]
+input_channels: 1
+output_channels: 2
+fe:
+  arch: resnet50
+  pretrained: true
+  with_gap: true
+  dropout: 0.0
+agg:
+  hidden_size: 512
+  dropout: 0.5
+output_type: dict
+pretrained: false
+path_pretrained:
+restore_weights: false
+#path_weights:
+debug: false

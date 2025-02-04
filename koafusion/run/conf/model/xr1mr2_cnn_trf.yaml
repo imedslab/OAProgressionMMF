@@ -1,0 +1,43 @@
+# @package model
+
+name: XR1MR2CnnTrf
+#input_size: None
+input_size:
+  - [ 700, 700 ]  # XR
+  - [ 320, 320, 128 ]  # SAG_3D_DESS
+  - [ 320, 320, 32 ]  # COR_IW_TSE
+#downscale: false
+downscale:
+  - [ 0.5, 0.5 ]  # XR
+  - [ 0.5, 0.5, 0.5 ]  # SAG_3D_DESS
+  - [ 0.5, 0.5, 1.0 ]  # COR_IW_TSE
+input_channels: 1
+output_channels: 2
+fe:
+  xr:
+    arch: resnext50_32x4d
+    pretrained: true
+    with_gap: true
+    dropout: 0.0
+  mr:
+    arch: resnet50
+    pretrained: true
+    with_gap: true
+    dropout: 0.0
+agg:
+#  num_slices: None
+  num_slices:
+    - 1  # XR
+    - 64  # SAG_3D_DESS
+    - 32  # COR_IW_TSE
+  depth: 4
+  heads: 8
+  emb_dropout: 0.1
+  mlp_dim: 2048
+  mlp_dropout: 0.1
+output_type: dict
+pretrained: false
+path_pretrained:
+restore_weights: false
+#path_weights:
+debug: false

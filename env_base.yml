@@ -1,0 +1,43 @@
+name: koafusion
+channels:
+  - defaults
+dependencies:
+  - python=3.12.8
+  - pip
+  - pip:
+    - --index-url https://download.pytorch.org/whl/cu121
+    - --extra-index-url https://pypi.python.org/simple
+    - numpy==1.26.4
+    - scipy==1.15.1
+    - cython==3.0.11
+    - numba==0.60.0
+    - torch==2.5.1+cu121
+    - torchvision==0.20.1+cu121
+    - tensorboard==2.18.0
+    - tensorflow==2.18.0
+    - captum==0.4.0
+    - SimpleITK==2.4.1
+    - joblib
+    - pandas
+    - scikit-image
+    - scikit-learn
+    - pywavelets
+    - matplotlib==3.10.0
+    - seaborn
+    - opencv-python-headless
+    - jupyter
+    - xlrd
+    - pyreadstat
+    - pydicom
+    - dicom2nifti
+    - tifffile
+    - sas7bdat
+    - nibabel
+    - tqdm
+    - pretrainedmodels
+    - hydra-core
+    - einops
+    - torchsummary
+    - iterative-stratification
+    - opencv-python
+    - thop

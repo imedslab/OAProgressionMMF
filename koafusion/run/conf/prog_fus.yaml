@@ -1,0 +1,97 @@
+path_project_root: ???
+path_data_root: ???
+experiment_id: ${now:%y%m%d_%H%M}_temp
+path_experiment_root: ${path_project_root}/results/${experiment_id}
+path_logs: ${path_experiment_root}/logs
+
+hydra:
+  run:
+    dir: ${path_experiment_root}/hydra
+
+defaults:
+  - _self_
+  - model:
+
+data:
+  modals_all:
+    - clin
+    - sag_3d_dess
+    - cor_iw_tse
+    - xr_pa
+    - sag_t2_map
+  sets:
+    n0:
+      name: oai
+      modals: None
+#        - clin
+#        - sag_3d_dess
+#        - cor_iw_tse
+#        - xr_pa
+      frac_classw: 1.0
+  target: prog_kl_48  # { prog_kl_12, prog_kl_24 , prog_kl_36 , prog_kl_48 , tiulpin2019_prog_bin }
+  exclude_surg: false
+  exclude_inj: false
+  ignore_cache: false
+  debug: false
+
+training:
+  loss:
+    name: FocalLoss  # { ce_loss , bce_wlogits_loss , CrossEntropyLoss , FocalLoss }
+    params:
+      reduction: mean
+      gamma: 2.0
+  optim:
+#    name: SGD
+#    lr_init: 0.001
+    name: Adam
+    lr_init: 1e-4
+    weight_decay: 1e-4
+#    weight_decay: 0.0
+  sched:
+    name: CustomWarmupStaticDecayLR
+    params:
+      epochs_warmup: 5
+      epochs_static: 100
+      epochs_decay: 1
+#      decay_factor: 0.9
+#    name: MultiStepLR
+#    params:
+#      milestones: [50, ]
+#      gamma: 0.1
+  sampler: weighted
+  batch_size: 8
+  epochs:
+    num: 40
+  folds:
+    num: 5
+    idx: -1
+    ignore:
+  debug: false
+
+validation:
+  criterion: avg_precision
+  batch_size: 16
+  debug: false
+
+testing:
+#  subset: test
+  batch_size: 16
+  folds:
+    idx: -1
+    ignore:
+  use_cached: false
+  describe_data: false
+  regime: eval  # { eval , explain }
+  metrics_foldw: true
+  ensemble_foldw: true
+  metrics_ensemble: true
+  explain_fn: ???  # { integ_grad , occlusion , modal_abl }
+  debug: false
+  profile: none
+
+num_workers: 24
+
+seed_trainval_test: 0
+seed_train_val: 0
+scheme_train_val: strat_target  # { one_site_out , strat_target }
+site_test: D
