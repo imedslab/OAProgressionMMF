@@ -25,7 +25,6 @@ Source code accompanying the publication in the IEEE Journal of Biomedical and H
           | contents/{00m,12m,...}.csv 
         # -- Custom data (available upon reasonable request)
         | OAI_XR_ROIs  # knee ROIs extracted from XR images   
-        | tiulpin2019multimodal__labels.csv  
         # -- Extracted from `OAIBaselineImages` by `Targets_meta_and_scans_from_OAI.ipynb`
         | OAI_SAG_3D_DESS_raw/
         | OAI_COR_IW_TSE_raw/
